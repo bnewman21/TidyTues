@@ -62,11 +62,7 @@ ggmap(PA) +
              color = "navyblue",
              alpha = 1, 
              size = 1) +
-  labs(title = "Alternative Fuel Stations in PA", caption = "Made by Brant Newman")
+  labs(title = "Alternative Fuel Stations in PA", caption = "Made by Brant Newman") +
   theme_map()
 ```
-
-
-
-
 
