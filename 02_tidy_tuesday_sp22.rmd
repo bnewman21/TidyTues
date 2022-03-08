@@ -1,0 +1,57 @@
+---
+title: 'Tidy Tuesday #2'
+author: "Brant Newman"
+output: 
+  html_document:
+    df_print: paged
+    code_download: true
+    theme: cerulean
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, error=TRUE, message=FALSE, warning=FALSE)
+```
+
+
+```{r libraries}
+library(tidyverse)     # for graphing and data cleaning
+library(lubridate)     # for date manipulation
+library(ggthemes)      # for even more plotting themes
+library(janitor)       # for cleaning variable names
+theme_set(theme_minimal()) # My favorite ggplot() theme :)
+```
+
+```{r}
+children_enrolled <- readr::read_csv('https://raw.githubusercontent.com/ajstarks/dubois-data-portraits/master/challenge/2022/challenge10/data.csv')
+```
+
+```{r}
+children_enrolled %>% 
+  mutate(percent_unenrolled = 100 - `Percent Enrolled`) %>% 
+  pivot_longer(cols = starts_with("Percent"),
+               names_to = ("Total_Children"),
+               values_to = ("Percentages")) %>%
+  ggplot(aes(fill = Total_Children, x = Year, y = Percentages), xaxt = "n") +
+  scale_x_continuous(position = "top") +
+  labs(title = "PROPORTION OF TOTAL NEGRO CHILDREN OF SCHOOL AGE WHO ARE \nENROLLED IN THE PUBLIC SCHOOLS. \nDone by Atlanta University", y = "") +
+  theme(plot.title = element_text(hjust = 0.5)) +
+  geom_col() +
+  scale_fill_manual(values = c("#BC1A43", "black")) +
+  theme(legend.position = "bottom") +
+  theme(panel.background = element_rect(fill = "#DAD2C7")) +
+  theme(plot.background = element_rect(fill = "#DAD2C7")) +
+  geom_text(aes(y = Percentages, label = Percentages), colour = "black",
+            position = position_stack(vjust = .5)) +
+  labs(caption = "Plot created by Brant Newman")
+```
+
+## Chart type
+- This is a stacked bar graph with the x-axis on top.
+
+## Type of data
+- The percentage of african-american children who were enrolled in public schools from 1876 to 1896. The x-axis is year and the y-axis is percentage.
+
+## Link to data or source
+- Data from https://github.com/ajstarks/dubois-data-portraits/blob/master/challenge/2022/cat2022.png
+
+
