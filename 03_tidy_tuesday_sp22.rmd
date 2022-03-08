@@ -50,7 +50,7 @@ stationsPA <- stations %>%
   filter(STATE == "PA") 
 ```
 
-```{r}
+```{r, fig.alt = "Map of Pennsylvania with points representing the locations of alternative fueling stations.}
 PA <- get_stamenmap(
   bbox = c(left = -80.586, bottom = 39.550, right = -74.598, top = 42.318), 
   maptype = "toner",
