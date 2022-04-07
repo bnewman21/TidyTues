@@ -1,0 +1,45 @@
+---
+title: 'Tidy Tuesday #5'
+author: "Brant Newman"
+output: 
+  html_document:
+    df_print: paged
+    code_download: true
+    theme: cerulean
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, error=TRUE, message=FALSE, warning=FALSE)
+```
+
+```{r}
+install.packages("nflfastR")
+```
+
+```{r}
+library(nflfastR)
+library(tidyverse)
+```
+
+```{r}
+data_2021 <- load_pbp(2021)
+```
+
+
+```{r, fig.alt = "The change in run, pass, and field goal occurances in one NFL regular season. There is not apparent trend other than that run and pass occurances usually vary together."}
+data_2021 %>% 
+  filter(week %in% (1:18)) %>% 
+  filter(play_type %in% c("field_goal", "run", "pass")) %>% 
+  group_by(play_type, week) %>% 
+  summarise(count = n()) %>% 
+  ggplot(aes(x = week, y = count, color = play_type)) +
+  geom_line() +
+  labs(title = "Change in Run, Pass, and Field Goal Occurances in One NFL Regular Season", 
+       caption = "Made by Brant Newman")
+```
+
+
+
+
+
+
